@@ -1,8 +1,10 @@
 import controller.EventController;
+import dao.SqliteJDBCConnector;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -13,6 +15,15 @@ import  static spark.Spark.*;
 public class Main {
 
     public static void main(String[] args) {
+        if(args.length > 0 && args[0].equals("--create-tables")) {
+            try {
+                SqliteJDBCConnector.createTables();
+            } catch (SQLException e) {
+                System.out.println("Cannot create tables in DB");
+                System.out.println(e);
+            }
+        }
+
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
         port(8888);
