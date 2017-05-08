@@ -17,6 +17,17 @@ public class Event {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
