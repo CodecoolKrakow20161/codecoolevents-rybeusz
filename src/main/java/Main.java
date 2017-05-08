@@ -28,14 +28,14 @@ public class Main {
         staticFileLocation("/public");
         port(8888);
 
-        // Always start with more specific routes
-        get("/hello", (req, res) -> "Hello World");
-
         // Always add generic routes to the end
         get("/", EventController::renderProducts, new ThymeleafTemplateEngine());
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render( EventController.renderProducts(req, res) );
+        });
+        get("/filter", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( EventController.renderProductsByCategory(req, res) );
         });
     }
 
