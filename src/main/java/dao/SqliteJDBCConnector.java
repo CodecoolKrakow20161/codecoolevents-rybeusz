@@ -14,6 +14,7 @@ public class SqliteJDBCConnector {
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
         } catch (SQLException e) {
             System.out.println("Connection to DB failed");
+            System.out.println(e.getMessage());
         }
 
         return connection;
