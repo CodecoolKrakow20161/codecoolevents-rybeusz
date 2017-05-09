@@ -47,4 +47,14 @@ public class EventController {
         return new ModelAndView(params, "product/add");
     }
 
+    public static void addNewEvent(Request req, Response res) {
+        EventDao eventDao = new EventDao();
+        String name = req.queryParams("name");
+        String description = req.queryParams("description");
+        String time = req.queryParams("time");
+        String category = req.queryParams("category");
+        Event event = new Event(name, description, time, category);
+        eventDao.addNewEvent(event);
+    }
+
 }
