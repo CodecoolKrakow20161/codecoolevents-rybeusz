@@ -2,10 +2,7 @@ package dao;
 
 import model.Event;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,5 +76,21 @@ public class EventDao {
         }
 
         return categories;
+    }
+
+    public void addNewEvent(Event event) {
+        String sql = "INSERT INTO events(event_name,description,event_date,category) VALUES(?,?,?,?)";
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,event.getName() );
+            statement.setString(2,event.getDescription() );
+            statement.setString(3,event.getDate() );
+            statement.setString(4,event.getCategory() );
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            System.out.println("Connect to DB failed");
+            System.out.println(e.getMessage());
+        }
     }
 }
