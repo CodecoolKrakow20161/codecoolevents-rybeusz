@@ -23,6 +23,7 @@
                 Filter by
                 <span class="caret"></span>
             </button>
+
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li>
                     <a th:href="@{index}">
@@ -38,11 +39,15 @@
         </div>
         <table class="table">
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Date</th>
                 <th>Category</th>
             </tr>
-            <tr th:each="event : ${eventContainer}">
+            <tr th:each="event,iterCount : ${eventContainer}">
+                <td>
+                    <p th:text="${iterCount.count}"></p>
+                </td>
                 <td>
                     <button type="button" class="btn" data-toggle="collapse" th:text="${event.getName()}" th:data-target="'#description'+${event.getId()}"></button>
                     <div th:id="'description' + ${event.getId()}" class="collapse text-left">
