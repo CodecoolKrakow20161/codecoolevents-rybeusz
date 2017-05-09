@@ -37,6 +37,13 @@ public class Main {
         get("/filter", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render( EventController.renderProductsByCategory(req, res) );
         });
+        get("/add", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( EventController.renderAddEvent() );
+        });
+        post("/add", (Request req, Response res) -> {
+            res.redirect("index");
+            return "";
+        });
     }
 
 
