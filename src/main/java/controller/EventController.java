@@ -42,4 +42,9 @@ public class EventController {
         return new ModelAndView(params, "product/index");
     }
 
+    public static ModelAndView renderAddEvent(Request req, Response res) {
+        Map params = new HashMap<>();
+        return new ModelAndView(params, "product/add");
+    }
+
 }
