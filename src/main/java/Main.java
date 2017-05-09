@@ -38,9 +38,10 @@ public class Main {
             return new ThymeleafTemplateEngine().render( EventController.renderProductsByCategory(req, res) );
         });
         get("/add", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( EventController.renderAddEvent() );
+            return new ThymeleafTemplateEngine().render( EventController.renderAddEvent(req, res) );
         });
         post("/add", (Request req, Response res) -> {
+            EventController.addNewEvent(req, res);
             res.redirect("index");
             return "";
         });
