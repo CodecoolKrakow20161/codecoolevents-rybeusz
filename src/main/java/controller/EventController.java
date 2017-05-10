@@ -54,7 +54,31 @@ public class EventController {
         String time = req.queryParams("time");
         String category = req.queryParams("category");
         Event event = new Event(name, description, time, category);
-        eventDao.addNewEvent(event);
+        eventDao.saveEvent(event);
+    }
+
+    public static ModelAndView renderEditEvent(Request req, Response res) {
+        EventDao eventDao = new EventDao();
+        Integer id = Integer.valueOf(req.queryParams("id"));
+        Event event = eventDao.findEvent(id);
+        Map params = new HashMap<>();
+        params.put("event", event);
+        return new ModelAndView(params, "product/edit");
+    }
+
+    public static void editEvent(Request req, Response res) {
+        Integer id = Integer.valueOf(req.queryParams("id"));
+        EventDao eventDao = new EventDao();
+        Event event = eventDao.findEvent(id);
+        String name = req.queryParams("name");
+        String description = req.queryParams("description");
+        String time = req.queryParams("time");
+        String category = req.queryParams("category");
+        event.setName(name);
+        event.setDescription(description);
+        event.setDate(time);
+        event.setCategory(category);
+        eventDao.saveEvent(event);
     }
 
 }
