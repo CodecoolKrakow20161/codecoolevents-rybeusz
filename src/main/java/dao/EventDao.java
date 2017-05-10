@@ -124,4 +124,18 @@ public class EventDao {
         }
         return event;
     }
+
+    public void removeEvent(Event event) {
+        String sql = "DELETE FROM events WHERE id = ?";
+
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,event.getId());
+            statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
