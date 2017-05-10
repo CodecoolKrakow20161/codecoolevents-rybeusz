@@ -43,6 +43,7 @@
                 <th>Name</th>
                 <th>Date</th>
                 <th>Category</th>
+                <th>Actions</th>
             </tr>
             <tr th:each="event,iterCount : ${eventContainer}">
                 <td>
@@ -56,6 +57,9 @@
                 </td>
                 <td th:text="${event.getDate()}">Date</td>
                 <td th:text="${event.getCategory()}">Category</td>
+                <td>
+                    <a class="btn btn-default" th:href="@{edit(id=${event.getId()})}">Edit</a>
+                </td>
             </tr>
         </table>
     </div>

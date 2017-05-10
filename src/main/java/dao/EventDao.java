@@ -78,8 +78,13 @@ public class EventDao {
         return categories;
     }
 
-    public void addNewEvent(Event event) {
-        String sql = "INSERT INTO events(event_name,description,event_date,category) VALUES(?,?,?,?)";
+    public void saveEvent(Event event) {
+        String sql;
+        if (event.getId() != null) {
+            sql = "UPDATE events SET event_name=?, description=?, event_date=?, category=? WHERE id=?";
+        } else {
+            sql = "INSERT INTO events(event_name,description,event_date,category) VALUES(?,?,?,?)";
+        }
         try {
             Connection connection = SqliteJDBCConnector.connection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -87,10 +92,36 @@ public class EventDao {
             statement.setString(2,event.getDescription() );
             statement.setString(3,event.getDate() );
             statement.setString(4,event.getCategory() );
+            if (event.getId() != null) {
+                statement.setInt(5,event.getId());
+            }
             statement.executeUpdate();
+            connection.close();
         } catch(SQLException e) {
             System.out.println("Connect to DB failed");
             System.out.println(e.getMessage());
         }
+    }
+
+    public Event findEvent(Integer id) {
+        Event event = null;
+        String sql = "SELECT * FROM events WHERE id = (?)";
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+            event = new Event(
+                    rs.getString("event_name"),
+                    rs.getString("description"),
+                    rs.getString("event_date"),
+                    rs.getString("category"));
+            event.setId(rs.getInt("id"));
+            connection.close();
+        } catch(SQLException e) {
+            System.out.println("Connect to DB failed");
+            System.out.println(e.getMessage());
+        }
+        return event;
     }
 }
