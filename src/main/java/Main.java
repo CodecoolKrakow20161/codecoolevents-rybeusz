@@ -45,6 +45,14 @@ public class Main {
             res.redirect("index");
             return "";
         });
+        get("/edit", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( EventController.renderEditEvent(req, res) );
+        });
+        post("/edit", (Request req, Response res) -> {
+            EventController.editEvent(req, res);
+            res.redirect("index");
+            return "";
+        });
     }
 
 
