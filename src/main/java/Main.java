@@ -53,6 +53,11 @@ public class Main {
             res.redirect("index");
             return "";
         });
+        get("/remove", (Request req, Response res) -> {
+            EventController.removeEvent(req, res);
+            res.redirect("index");
+            return "";
+        });
     }
 
 
