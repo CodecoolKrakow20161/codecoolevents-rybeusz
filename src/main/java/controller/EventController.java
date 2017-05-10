@@ -81,4 +81,11 @@ public class EventController {
         eventDao.saveEvent(event);
     }
 
+    public static void removeEvent(Request req, Response res) {
+        Integer id = Integer.valueOf(req.queryParams("id"));
+        EventDao eventDao = new EventDao();
+        Event event = eventDao.findEvent(id);
+        eventDao.removeEvent(event);
+    }
+
 }
