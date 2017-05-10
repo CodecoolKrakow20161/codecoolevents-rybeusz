@@ -59,6 +59,7 @@
                 <td th:text="${event.getCategory()}">Category</td>
                 <td>
                     <a class="btn btn-default" th:href="@{edit(id=${event.getId()})}">Edit</a>
+                    <a class="btn btn-default" th:href="@{remove(id=${event.getId()})}">Remove</a>
                 </td>
             </tr>
         </table>
