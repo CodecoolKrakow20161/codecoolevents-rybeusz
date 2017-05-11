@@ -35,6 +35,31 @@ public class EventDao {
         return events;
     }
 
+    public List<Event> getBySearchBox(String event_name) {
+        List<Event> events = new ArrayList<Event>();
+        String sql = "SELECT * FROM events WHERE event_name LIKE (?)";
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,'%' + event_name + '%');
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Event event = new Event(
+                        rs.getString("event_name"),
+                        rs.getString("description"),
+                        rs.getString("event_date"),
+                        rs.getString("category"));
+                event.setId(rs.getInt("id"));
+                events.add(event);
+            }
+            connection.close();
+        } catch(SQLException e) {
+            System.out.println("Connect to DB failed");
+            System.out.println(e.getMessage());
+        }
+        return events;
+    }
+
     public List<Event> getByCategory(String category) {
         List<Event> events = new ArrayList<Event>();
 
