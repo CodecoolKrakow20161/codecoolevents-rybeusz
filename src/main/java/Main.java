@@ -37,6 +37,9 @@ public class Main {
         get("/filter", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render( EventController.renderProductsByCategory(req, res) );
         });
+        get("/search", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( EventController.renderProductsBySearchBox(req, res) );
+        });
         get("/add", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render( EventController.renderAddEvent(req, res) );
         });
