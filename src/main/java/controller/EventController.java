@@ -42,6 +42,19 @@ public class EventController {
         return new ModelAndView(params, "product/index");
     }
 
+    public static ModelAndView renderProductsBySearchBox(Request req, Response res) {
+        EventDao eventDao = new EventDao();
+        String searchBoxValue = req.queryParams("event_name");
+        List<Event> events = eventDao.getBySearchBox(searchBoxValue);
+        List<String> categories = eventDao.getCategories();
+
+        Map params = new HashMap<>();
+        params.put("eventContainer", events);
+        params.put("categories", categories);
+
+        return new ModelAndView(params, "product/index");
+    }
+
     public static ModelAndView renderAddEvent(Request req, Response res) {
         Map params = new HashMap<>();
         return new ModelAndView(params, "product/add");
