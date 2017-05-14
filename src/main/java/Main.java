@@ -1,4 +1,5 @@
 import controller.EventController;
+import dao.EventDao;
 import dao.SqliteJDBCConnector;
 import spark.Request;
 import spark.Response;
@@ -28,37 +29,40 @@ public class Main {
         staticFileLocation("/public");
         port(8888);
 
-        // Always add generic routes to the end
-        get("/", EventController::renderProducts, new ThymeleafTemplateEngine());
-        // Equivalent with above
-        get("/index", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( EventController.renderProducts(req, res) );
-        });
-        get("/filter", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( EventController.renderProductsByCategory(req, res) );
-        });
-        get("/search", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( EventController.renderProductsBySearchBox(req, res) );
-        });
-        get("/add", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( EventController.renderAddEvent(req, res) );
-        });
-        post("/add", (Request req, Response res) -> {
-            EventController.addNewEvent(req, res);
-            res.redirect("index");
+        EventController eventController = new EventController();
+
+        get("/", (Request req, Response res) -> {
+            res.redirect("events");
             return "";
         });
-        get("/edit", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( EventController.renderEditEvent(req, res) );
+        get("/events", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( eventController.renderProducts(req, res) );
         });
-        post("/edit", (Request req, Response res) -> {
-            EventController.editEvent(req, res);
-            res.redirect("index");
+        get("events/filter", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( eventController.renderProductsByCategory(req, res) );
+        });
+        get("events/search", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( eventController.renderProductsBySearchBox(req, res) );
+        });
+        get("events/add", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( eventController.renderAddEvent(req, res) );
+        });
+        post("events/add", (Request req, Response res) -> {
+            eventController.addNewEvent(req, res);
+            res.redirect("/");
             return "";
         });
-        get("/remove", (Request req, Response res) -> {
-            EventController.removeEvent(req, res);
-            res.redirect("index");
+        get("events/edit", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( eventController.renderEditEvent(req, res) );
+        });
+        post("events/edit", (Request req, Response res) -> {
+            eventController.editEvent(req, res);
+            res.redirect("/");
+            return "";
+        });
+        get("events/remove", (Request req, Response res) -> {
+            eventController.removeEvent(req, res);
+            res.redirect("/");
             return "";
         });
     }
