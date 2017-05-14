@@ -1,12 +1,12 @@
 package controller;
 
 import dao.EventDao;
+import dao.EventDaoSql;
 import model.Event;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class EventController {
     private EventDao eventDao;
 
     public EventController() {
-        eventDao = new EventDao();
+        eventDao = new EventDaoSql();
     }
 
     public ModelAndView renderProducts(Request req, Response res) {
