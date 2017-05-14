@@ -59,10 +59,12 @@ public class EventDaoSql implements EventDao {
 
     public List<Event> getByCategory(String category) {
         List<Event> events = new ArrayList<Event>();
+        String sql = "select * from events where category=(?)";
         try {
             Connection connection = SqliteJDBCConnector.connection();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from events WHERE category = " + String.format("'%s'", category));
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, category);
+            ResultSet rs = statement.executeQuery();
             while(rs.next()) {
                 Event event = new Event(
                         rs.getString("event_name"),
