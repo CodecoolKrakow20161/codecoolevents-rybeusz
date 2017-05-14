@@ -1,14 +1,10 @@
 import controller.EventController;
-import dao.EventDao;
 import dao.SqliteJDBCConnector;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 import  static spark.Spark.*;
 
@@ -16,7 +12,7 @@ import  static spark.Spark.*;
 public class Main {
 
     public static void main(String[] args) {
-        if(args.length > 0 && args[0].equals("--create-tables")) {
+        if (args.length > 0 && args[0].equals("--create-tables")) {
             try {
                 SqliteJDBCConnector.createTables();
             } catch (SQLException e) {
